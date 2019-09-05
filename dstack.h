@@ -59,9 +59,43 @@ extern "C" {
             *obj = p->dstop->dsitem;
             p->dstop = p->dstop->dsnext;
             p->dssize--;
+        } else
+            printf("Empty Stack!\n");
+    }
+
+    void dsprinttop(DSTACK *p) {
+        if (dsempty(p))
+            printf("Empty Stack!\n");
+        else {
+            printf("Top -> [%i]\n", p->dstop->dsitem.key);
         }
     }
 
+    void dsprintall(DSTACK *p) {
+        if (p->dstop == NULL) {
+            printf("===\nStackEnd\n");
+            return;
+        } else {
+            DSTACK q;
+            ITEM imaginary;
+            q = *p;
+            printf("===\n");
+            printf("|%i|\n", q.dstop->dsitem.key);
+            dspop(&q, &imaginary);
+            dsprintall(&q);
+        }
+    }
+
+    void dsdestroy(DSTACK *p) {
+        if(p != NULL)
+            return;
+        else{
+            DSPTR aux;
+            p->dstop = p->dstop->dsnext;
+            free(aux);
+            dsdestroy(p);
+        }
+    }
 
 
 #ifdef __cplusplus
