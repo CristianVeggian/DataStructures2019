@@ -1,6 +1,9 @@
 #ifndef SQUEUE_H
 #define SQUEUE_H
 
+#include "dstack.h"
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -12,7 +15,7 @@ extern "C" {
     typedef struct {
         int sqbegin;
         int sqend;
-        int sqtam;
+        int sqsize;
         ITEM sqarray[N];
     } SQUEUE;
 
@@ -26,41 +29,69 @@ extern "C" {
     void sqinit(SQUEUE *p) {
         p->sqbegin = 0;
         p->sqend = -1;
-        p->sqtam = 0;
+        p->sqsize = 0;
     }
 
     int sqsize(SQUEUE *p) {
-        return p->sqtam;
+        return p->sqsize;
     }
 
     bool sqempty(SQUEUE *p) {
-        return (p->sqtam == 0);
+        return (p->sqsize == 0);
     }
 
     bool sqfull(SQUEUE *p) {
-        return (p->sqtam == N - 1);
+        return (p->sqsize == N);
     }
 
     bool sqpush(SQUEUE *p, ITEM obj) {
         if (!sqfull(p)) {
             p->sqend = sqplus(p->sqend);
             p->sqarray[p->sqend] = obj;
-            p->sqtam++;
+            (p->sqsize)++;
             return true;
         }
         printf("Full Queue!\n");
         return false;
     }
-    
-    bool sqpop(SQUEUE *p, ITEM *obj){
-        if(!sqempty(p)){
+
+    bool sqpop(SQUEUE *p, ITEM *obj) {
+        if (!sqempty(p)) {
             *obj = p->sqarray[p->sqbegin];
             p->sqbegin = sqplus(p->sqbegin);
-            p->sqtam--;
+            p->sqsize--;
             return true;
         }
-        printf("Empty Queue");
+        printf("Empty Queue\n");
         return false;
+    }
+
+    void sqprintall(SQUEUE *p) {
+        if (p->sqsize == 0) {
+            printf("|\n");
+            return;
+        }
+        SQUEUE q = *p;
+        ITEM imaginary;
+        printf("| %i ", q.sqarray[q.sqbegin].key);
+        sqpop(&q, &imaginary);
+        sqprintall(&q);
+    }
+
+    void sqprintend(SQUEUE *p) {
+        if (p->sqsize == 0)
+            printf("Empty Queue\n");
+        else {
+            printf("END -> | %i |\n", p->sqarray[p->sqend].key);
+        }
+    }
+
+    void sqprintbegin(SQUEUE *p) {
+        if (p->sqsize == 0)
+            printf("Empty Queue\n");
+        else {
+            printf("BEGIN -> | %i |\n", p->sqarray[p->sqbegin].key);
+        }
     }
 
 #ifdef __cplusplus
