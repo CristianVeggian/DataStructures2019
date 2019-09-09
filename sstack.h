@@ -5,14 +5,12 @@
 extern "C" {
 #endif
 
-#ifndef _STDBOOL_H
-#include <stdbool.h>
+#ifndef STDABSDATA_H
+#include "stdabsdata.h"
 #endif
 
-#ifndef N
-#define N 10
-#endif
-    
+
+
     typedef struct {
         ITEM ssarray[N];
         int sstop;

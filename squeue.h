@@ -3,13 +3,12 @@
 
 #include "dstack.h"
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef N
-#define N 10
+#ifndef STDABSDATA_H
+#include "stdabsdata.h"
 #endif
 
     typedef struct {

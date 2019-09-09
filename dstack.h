@@ -5,17 +5,9 @@
 extern "C" {
 #endif
 
-#ifndef  _STDLIB_H
-#include <stdlib.h>
+#ifndef STDABSDATA_H
+#include "stdabsdata.h"
 #endif
-
-#ifndef _STDBOOL_H
-#include <stdbool.h>
-#endif
-
-    typedef struct {
-        int key;
-    } ITEM;
 
     typedef struct DSNODE* DSPTR;
 
@@ -87,9 +79,9 @@ extern "C" {
     }
 
     void dsdestroy(DSTACK *p) {
-        if(p != NULL)
+        if (p != NULL)
             return;
-        else{
+        else {
             DSPTR aux;
             p->dstop = p->dstop->dsnext;
             free(aux);
